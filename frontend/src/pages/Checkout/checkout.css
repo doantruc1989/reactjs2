@@ -1,0 +1,99 @@
+@import url("https://rsms.me/inter/inter.css");
+
+.checkout-container {
+    margin: 80px 0;
+    font-family: "Inter var", sans-serif;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.checkout {
+    width: auto;
+    padding: 10vw 2rem 0;
+    margin: 0 auto;
+    height: 100vh;
+
+}
+
+.checkout hr {
+    height: 1px;
+    width: 100%;
+    background-color: #e3e5ed;
+    border: 0;
+    margin: 2rem 0;
+}
+
+.form {
+    display: grid;
+    grid-gap: 1rem;
+}
+
+.field {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e3e5ed;
+    padding: .5rem;
+    border-radius: .25rem;
+}
+
+.field__label {
+    color: white;
+    font-size: 1rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem
+}
+
+.field__input {
+    color: white;
+    padding: 0;
+    margin: 6px 0;
+    border: 0;
+    outline: 0;
+    font-weight: bold;
+    font-size: 1.5rem;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    text-transform: lowercase;
+}
+
+.field:focus-within {
+    border-color: greenyellow;
+}
+
+.fields {
+    display: grid;
+    grid-gap: 1rem;
+}
+
+.fields--2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.fields--3 {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.button {
+    background-color: white;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: block;
+    color: #fff;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+}
+
+.button:hover {
+    background-color: gray;
+}
