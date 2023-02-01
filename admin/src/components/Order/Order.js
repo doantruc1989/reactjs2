@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import { Pagination, Table, Form, Input, Button, Modal, } from 'antd';
-import { SaveOutlined, EditOutlined, DeleteOutlined, } from '@ant-design/icons';
+import axiosAll from '../../other/axiosAll';
+import { Pagination, Table, Form, Input } from 'antd';
+
 
 
 const Order = () => {
@@ -12,7 +12,7 @@ const Order = () => {
 
     useEffect(() => {
         try {
-            axios.get(`http://localhost:3001/admin/listorder`)
+            axiosAll.get(`/admin/listorder`)
                 .then((response => {
                     setOrder(response.data.map(row => ({
                         id: row.id,
@@ -140,71 +140,10 @@ const Order = () => {
                 }
             },
         },
-        {
-            title: 'Action',
-            render: (_, record) => {
-                return (
-                    <>
-                        <Button
-                            type="link"
-                            onClick={() => {
-                                setEditingRow(record.id);
-                                form.setFieldsValue({
-                                    id: record.id,
-                                    userid: record.userId,
-                                    cartTotal: record.cartTotal,
-                                    revenue: record.revenue,
-                                    orderItems: record.orderItems,
-                                    createdAt: record.createdAt,
-                                });
-                            }}
-                        >
-                            <EditOutlined style={{ fontSize: '20px' }} />
-                        </Button>
-                        <Button type="link" htmlType="submit">
-                            <SaveOutlined style={{ fontSize: '20px' }} />
-                        </Button>
-                        <Button
-                            type="link"
-                            onClick={() => {
-                                Modal.confirm({
-                                    title: "Are you sure to delete this order record?",
-                                    okText: "Yes",
-                                    okType: "danger",
-                                    onOk: () => {
-                                        setEditingRow(record.id)
-                                        try {
-                                            axios.delete(`http://localhost:3001/sdasd/${record.id}`)
-                                        } catch (error) {
-                                            console.log(error)
-                                        }
-                                    },
-                                });
-                            }}
-                        >
-                            <DeleteOutlined style={{ fontSize: '20px' }} />
-                        </Button>
-                    </>
-                );
-            },
-        },
     ];
 
     const onChange = (current) => {
         setcurrentPage(current);
-    };
-
-    const onFinish = (values) => {
-        const updatedDataSource = [...order];
-        setOrder(updatedDataSource);
-        setEditingRow(null);
-        try {
-            axios.post(`http://localhost:3001/order/${values.id}`,
-                values,
-            );
-        } catch (error) {
-            console.log(error)
-        }
     };
 
 
@@ -212,7 +151,7 @@ const Order = () => {
         <div>
             <h1>Order Table</h1>
 
-            <Form form={form} onFinish={onFinish}>
+            <Form>
                 <Table
                     bordered
                     columns={columns}

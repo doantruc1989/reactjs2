@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
+import axiosAll from '../../other/axiosAll';
 import { Pagination, Table, Form, Input, Button, Modal, } from 'antd';
 import { SaveOutlined, EditOutlined, DeleteOutlined, } from '@ant-design/icons';
+import { Link } from 'react-router-dom'
 
 const Blog = () => {
     const [order, setOrder] = useState([]);
@@ -11,7 +12,7 @@ const Blog = () => {
 
     useEffect(() => {
         try {
-            axios.get(`http://localhost:3001/blog`)
+            axiosAll.get(`/blog`)
                 .then((response => {
                     setOrder(response.data.map(row => ({
                         id: row.id,
@@ -175,7 +176,7 @@ const Blog = () => {
                                     onOk: () => {
                                         setEditingRow(record.id)
                                         try {
-                                            axios.delete(`http://localhost:3001/sdasd/${record.id}`)
+                                            axiosAll.delete(`/blog/delete/${record.id}`)
                                         } catch (error) {
                                             console.log(error)
                                         }
@@ -200,7 +201,7 @@ const Blog = () => {
         setOrder(updatedDataSource);
         setEditingRow(null);
         try {
-            axios.post(`http://localhost:3001/ordedsr/${values.id}`,
+            axiosAll.put(`/blog/edit/${values.id}`,
                 values,
             );
         } catch (error) {
@@ -212,7 +213,7 @@ const Blog = () => {
     return (
         <div>
             <h1>Blog Table</h1>
-
+            <Button><Link to='addnewblog'>Add new Blog</Link></Button>
             <Form form={form} onFinish={onFinish}>
                 <Table
                     bordered

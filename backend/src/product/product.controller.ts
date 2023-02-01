@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import EditCategoryDto from './dto/editCategory.tdo';
 import EditProductDto from './dto/editProduct.dto';
 import NewCategoryDto from './dto/newCategory.dto';
 import NewProductDto from './dto/newProduct.dto';
@@ -36,6 +37,21 @@ export class ProductController {
         return this.productService.listAllCategory()
     }
 
+    @Post('category/:id')
+    async editCategory(@Param('id') id: number, @Body() editCategory: EditCategoryDto) {
+        return this.productService.adminEditCategory(id, editCategory)
+    }
+
+    @Delete('category/:id')
+    async deleteCategory(@Param('id') id: number) {
+        return this.productService.adminDeleteCategory(id)
+    }
+
+    @Post('newcategory')
+    async newCategory(@Body() newCategory: NewCategoryDto) {
+        return this.productService.adminNewCategory(newCategory)
+    }
+
     @Get('getSixproduct')
     async get6Product() {
         return this.productService.list6Product()
@@ -49,5 +65,10 @@ export class ProductController {
     @Delete('product/:id')
     async deleteProduct(@Param('id') id: number) {
         return this.productService.deleteThisProduct(id)
+    }
+
+    @Get('lowquantity')
+    async checkQty() {
+        return this.productService.adminCheckQty()
     }
 }

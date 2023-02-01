@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
 import { Pagination, Table, Form, Input, Button, Modal } from 'antd';
 import { SaveOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import axiosAll from '../../other/axiosAll';
 
 // const baseURL = 
 const User = () => {
@@ -13,7 +13,7 @@ const User = () => {
 
     useEffect(() => {
         try {
-            axios.get(`http://localhost:3001/admin?page=${currentPage}`)
+            axiosAll.get(`/admin?page=${currentPage}`)
                 .then(
                     (response => {
                         setUsers(response.data.map(row => ({
@@ -155,7 +155,7 @@ const User = () => {
                                     onOk: () => {
                                         setEditingRow(record.id);
                                         try {
-                                            axios.delete(`http://localhost:3001/admin/deleteUser/${record.id}`)
+                                            axiosAll.delete(`/admin/deleteUser/${record.id}`)
                                         } catch (error) {
                                             console.log(error)
                                         }
@@ -183,7 +183,7 @@ const User = () => {
         setUsers(updatedDataSource);
         setEditingRow(null);
         try {
-            axios.put(`http://localhost:3001/admin/editUser/${values.id}`,
+            axiosAll.put(`/admin/editUser/${values.id}`,
                 values,
             );
         } catch (error) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
+import axiosAll from '../../other/axiosAll';
 import { Pagination, Table, Form, Input, Button, Modal, } from 'antd';
 import { SaveOutlined, EditOutlined, DeleteOutlined, } from '@ant-design/icons';
 import { Link } from 'react-router-dom'
@@ -12,7 +12,7 @@ const Product = () => {
 
     useEffect(() => {
         try {
-            axios.get(`http://localhost:3001/product?page=${currentPage}`)
+            axiosAll.get(`/product?page=${currentPage}`)
                 .then((response => {
                     setProducts(response.data.map(row => ({
                         id: row.id,
@@ -126,7 +126,7 @@ const Product = () => {
             title: 'Image',
             dataIndex: 'image',
             ellipsis: true,
-            width: 'auto',
+            width: 100,
             render: (text, record) => {
                 if (editingRow === record.id) {
                     return (
@@ -193,7 +193,7 @@ const Product = () => {
                                     onOk: () => {
                                         setEditingRow(record.id)
                                         try {
-                                            axios.delete(`http://localhost:3001/product/${record.id}`)
+                                            axiosAll.delete(`/product/${record.id}`)
                                         } catch (error) {
                                             console.log(error)
                                         }
@@ -218,7 +218,7 @@ const Product = () => {
         setProducts(updatedDataSource);
         setEditingRow(null);
         try {
-            axios.post(`http://localhost:3001/product/${values.id}`,
+            axiosAll.post(`/product/${values.id}`,
                 values,
             );
         } catch (error) {

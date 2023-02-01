@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-// import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import axiosAll from '../../other/axiosAll';
 import { Form, Input, Button } from 'antd';
 import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -21,7 +21,7 @@ const AddProduct = () => {
 
     const onFinish = () => {
         try {
-            axios.post(`http://localhost:3001/product/createNewProduct`, JSON.stringify({
+            axiosAll.post(`/product/createNewProduct`, JSON.stringify({
                 productName,
                 price,
                 quantity,

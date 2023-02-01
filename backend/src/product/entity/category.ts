@@ -24,7 +24,7 @@ export class Category {
     @PrimaryGeneratedColumn({ type: 'bigint', name: 'id' })
     id: number;
 
-    @Column('varchar', { name: 'category', length: 75 })
+    @Column('varchar', { name: 'category', length: 75, nullable: true  })
     category: string;
 
     @Column('varchar')
@@ -32,6 +32,9 @@ export class Category {
 
     @Column('varchar')
     path: string;
+
+    @Column('bigint', {default: () => "'0'"} )
+    parentId: number;
 
     // @Column( 'datetime', { name: 'createdAt' } )
     // createdAt: Date;

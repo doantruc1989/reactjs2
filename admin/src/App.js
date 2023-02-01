@@ -1,165 +1,45 @@
 import './App.css'
-
-import React, { useState } from 'react';
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  BarChartOutlined,
-  UserOutlined,
-  ShoppingOutlined,
-  HomeOutlined,
-  CheckOutlined,
-  DollarOutlined,
-  RiseOutlined,
-  EditOutlined,
-  DeploymentUnitOutlined,
-} from '@ant-design/icons';
-import { Layout, Menu, theme, Col, Row, Button } from 'antd';
+import React from 'react';
 import User from './components/User/User';
 import Product from './components/Product/Product';
-import Dashboard from './components/Dashboard/Dashboard';
-import { Routes, Route, Link, } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Chart from './components/Chart/Chart';
 import AddProduct from './components/Product/AddProduct';
 import AddUser from './components/User/AddUser';
-import Logo from "./imgs/logo.png";
 import Order from './components/Order/Order';
 import Blog from './components/Blog/Blog';
-import Marketting from './components/Marketting/Marketting';
+import RequireAuth from './other/RequireAuth'
+import Addblog from './components/Blog/Addblog';
+import Login from './components/Login/Login';
+import Home from './components/Home/Home';
+import Dashboard from './components/Dashboard/Dashboard';
+import Category from './components/Category/Category';
+import AddCategory from './components/Category/Addcategory';
 
-const { Header, Sider, Content } = Layout;
+const ROLES = {
+  "Admin": 'admin'
+}
 
 const App = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const [current, setCurrent] = useState();
-
-
-  const onClick = (e) => {
-    console.log('click ', e);
-    setCurrent(e.key);
-  };
-
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
   return (
-    <Layout >
-      <Sider trigger={null} collapsible collapsed={collapsed} className='sidebar'>
-        <div className="logo">
-          <img src={Logo} alt="logo" />
-
-        </div>
-        <Menu
-          className='menu'
-          theme="dark"
-          mode="inline"
-          onClick={onClick}
-          selectedKeys={[current]}
-          items={[
-            {
-              className: 'menuItem',
-              key: '1',
-              icon: <HomeOutlined />,
-              label: <Link to=''>DashBoard</Link>,
-            },
-            {
-              className: 'menuItem',
-              key: '2',
-              icon: <UserOutlined />,
-              label: <Link to='user'>User Table</Link>,
-            },
-            {
-              className: 'menuItem',
-              key: '3',
-              icon: <ShoppingOutlined />,
-              label: <Link to='product'>Product Table</Link>,
-            },
-            {
-              className: 'menuItem',
-              key: '4',
-              icon: <CheckOutlined />,
-              label: <Link to='order'>Order Table</Link>,
-            },
-            {
-              className: 'menuItem',
-              key: '5',
-              icon: <EditOutlined />,
-              label: <Link to='blog'>Blog Table</Link>,
-            },
-            {
-              className: 'menuItem',
-              key: '6',
-              icon: <DeploymentUnitOutlined />,
-              label: <Link to='marketting'>Marketting Table</Link>,
-            },
-            {
-              className: 'menuItem',
-              key: '7',
-              icon: <RiseOutlined />,
-              label: <Link to='sales'>Sales</Link>,
-            },
-            {
-              className: 'menuItem',
-              key: '8',
-              icon: <DollarOutlined />,
-              label: <Link to='revenue'>Revenue</Link>,
-            },
-            {
-              className: 'menuItem',
-              key: '9',
-              icon: <BarChartOutlined />,
-              label: <Link to='chart'>Chart</Link>,
-            },
-          ]}
-        />
-      </Sider>
-      <Layout className="site-layout">
-
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        >
-          <div className='navbar'>
-            <Row gutter={[24, 24]}>
-              <Col span={18}>
-                {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                  className: 'trigger',
-                  onClick: () => setCollapsed(!collapsed),
-                })}
-              </Col>
-              <Col span={6} className='navbar__username'>
-                <p>Welcome back </p>
-                <Button>Logout</Button>
-              </Col>
-            </Row>
-          </div>
-        </Header>
-
-        <Content
-          style={{
-            margin: '60px 16px',
-            padding: 24,
-            minHeight: 480,
-            background: colorBgContainer,
-          }}
-        >
-          <Routes>
-            <Route path='user' element={<User />} />
-            <Route path='user/addnewUser' element={<AddUser />} />
-            <Route path='product' element={<Product />} />
-            <Route path='product/addnewProduct' element={<AddProduct />} />
-            <Route path='order' element={<Order />} />
-            <Route path='blog' element={<Blog />} />
-            <Route path='marketting' element={<Marketting />} />
-            <Route path='' element={<Dashboard />} />
-            <Route path='chart' element={<Chart />} />
-
-          </Routes>
-        </Content>
-      </Layout>
-    </Layout>
-  );
+    <Routes>
+      <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+        <Route path="/" element={<Home />}>
+          <Route index element={<Dashboard />} />
+          <Route path='user' element={<User />} />
+          <Route path='user/addnewUser' element={<AddUser />} />
+          <Route path='product' element={<Product />} />
+          <Route path='product/addnewProduct' element={<AddProduct />} />
+          <Route path='category' element={<Category />} />
+          <Route path='category/addnewcategory' element={<AddCategory />} />
+          <Route path='order' element={<Order />} />
+          <Route path='blog' element={<Blog />} />
+          <Route path='blog/addnewblog' element={<Addblog />} />
+          <Route path='chart' element={<Chart />} />
+        </Route>
+      </Route>
+      <Route path='login' element={<Login />} />
+    </Routes>
+  )
 };
 export default App;

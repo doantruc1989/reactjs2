@@ -96,8 +96,8 @@ export class UsersService {
         var userFromDb = await this.usersRepository.findOneBy({ email });
         console.log(userFromDb)
 
-        const APP_PORT = 3000
-        const APP_HOST = 'localhost'
+
+        const APP_HOST = 'https://ngrok2.vercel.app/'
         const GOOGLE_MAILER_CLIENT_ID = '49503388661-df69vuns5r99pl1hlsn1k05gejck6gof.apps.googleusercontent.com'
         const GOOGLE_MAILER_CLIENT_SECRET = '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'
         const GOOGLE_MAILER_REFRESH_TOKEN = '1//04XDxbkU1N2X-CgYIARAAGAQSNwF-L9Irzdh260iQjVplUzjGTWh8m_SwabEq5YKMKmS75bAoEMq91KCVxg9r2juL2yVO271cQ6A'
@@ -136,7 +136,7 @@ export class UsersService {
                 subject: 'Forgotten Password',
                 text: 'Forgot Password',
                 html: 'Hi! <br><br> If you requested to reset your password<br><br>' +
-                    `http://${APP_HOST}:${APP_PORT}/reset-password/${forgotToken}`,
+                    `${APP_HOST}/reset-password/${forgotToken}`,
             };
             await transport.sendMail(mailOptions)
         } else { throw new HttpException('LOGIN.USER_NOT_FOUND', HttpStatus.NOT_FOUND); }

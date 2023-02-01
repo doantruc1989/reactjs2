@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import * as cors from 'cors';
 
 async function bootstrap() {
 
@@ -16,11 +15,12 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.enableCors({
+    allowedHeaders: 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe',
     origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
 
-  await app.listen(3001);
+  await app.listen(3006);
 }
 bootstrap();
